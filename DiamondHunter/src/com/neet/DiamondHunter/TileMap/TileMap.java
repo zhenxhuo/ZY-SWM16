@@ -17,12 +17,12 @@ import com.neet.DiamondHunter.Main.GamePanel;
 public class TileMap {
 	
 	// position
-	public int x;
-	public int y;
-	public int xdest;
-	public int ydest;
-	public int speed;
-	public boolean moving;
+	private int x;
+	private int y;
+	private int xdest;
+	private int ydest;
+	private int speed;
+	private boolean moving;
 	
 	// bounds
 	public int xmin;
@@ -222,22 +222,3 @@ public class TileMap {
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
