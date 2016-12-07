@@ -80,8 +80,6 @@ public class Hud {
 			else Content.drawString(g, minutes + ":" + seconds, 85, 3);
 		}
 		
-		
-		
 	}
 	
 }

@@ -70,10 +70,9 @@ public class GameOverState extends GameState {
 	}
 	
 	public void handleInput() {
-		if(Keys.isPressed(Keys.K6)) {
+		if(Keys.isPressed(Keys.ENTER)) {
 			gsm.setState(GameStateManager.MENU);
 			JukeBox.play("collect");
 		}
 	}
-	
 }

@@ -45,19 +45,18 @@ public class MenuState extends GameState {
 		
 		if(currentOption == 0) g.drawImage(diamond, 25, 86, null);
 		else if(currentOption == 1) g.drawImage(diamond, 25, 96, null);
-		
 	}
 	
 	public void handleInput() {
-		if(Keys.isPressed(Keys.K3) && currentOption < options.length - 1) {
+		if(Keys.isPressed(Keys.DOWN) && currentOption < options.length - 1) {
 			JukeBox.play("menuoption");
 			currentOption++;
 		}
-		if(Keys.isPressed(Keys.K1) && currentOption > 0) {
+		if(Keys.isPressed(Keys.UP) && currentOption > 0) {
 			JukeBox.play("menuoption");
 			currentOption--;
 		}
-		if(Keys.isPressed(Keys.K6)) {
+		if(Keys.isPressed(Keys.ENTER)) {
 			JukeBox.play("collect");
 			selectOption();
 		}
@@ -71,5 +70,4 @@ public class MenuState extends GameState {
 			System.exit(0);
 		}
 	}
-	
 }

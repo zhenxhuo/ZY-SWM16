@@ -43,13 +43,6 @@ public class Player extends Entity {
 	private boolean onWater;
 	private long ticks;
 	
-	// player status
-	private int healthPoints;
-	private boolean invincible;
-	private boolean powerUp;
-	private boolean speedUp;
-	
-	
 	public Player(TileMap tm) {
 		
 		super(tm);
@@ -78,14 +71,9 @@ public class Player extends Entity {
 	}
 	
 	private void setAnimation(int i, BufferedImage[] bi, int d) {
-		setAnimation(i, bi, d, false);
-	}
-	
-	private void setAnimation(int i, BufferedImage[] bi, int d, boolean slowMotion) {
 		currentAnimation = i;
 		animation.setFrames(bi);
 		animation.setDelay(d);
-		slowMotion = true;
 	}
 	
 	public void collectedDiamond() { numDiamonds++; }
@@ -93,17 +81,10 @@ public class Player extends Entity {
 	public int getTotalDiamonds() { return totalDiamonds; }
 	public void setTotalDiamonds(int i) { totalDiamonds = i; }
 	
-	public int getx() { return x; }
-	public int gety() { return y; }
-	public int getRow() { return rowTile; }
-	public int getCol() { return colTile; }
-	
 	public void gotBoat() { hasBoat = true; tileMap.replace(22, 4); }
 	public void gotAxe() { hasAxe = true; }
 	public boolean hasBoat() { return hasBoat; }
 	public boolean hasAxe() { return hasAxe; }
-	
-	public int getHealthPoints() { return healthPoints; }
 	
 	// Used to update time.
 	public long getTicks() { return ticks; }
@@ -150,23 +131,21 @@ public class Player extends Entity {
 		
 		ticks++;
 		
+		// check if on water
+		boolean current = onWater;
+		if(tileMap.getIndex(ydest / tileSize, xdest / tileSize) == 4) {
+			onWater = true;
+		}
+		else {
+			onWater = false;
+		}
+		// if going from land to water
+		if(!current && onWater) {
+			JukeBox.play("splash");
+		}
 		
 		// set animation
 		if(down) {
-			
-			// check if on water
-			boolean current = onWater;
-			if(tileMap.getIndex(ydest / tileSize, xdest / tileSize) == 4) {
-				onWater = true;
-			}
-			else {
-				onWater = false;
-			}
-			// if going from land to water
-			if(!current && onWater) {
-				JukeBox.play("splash");
-			}
-			
 			if(onWater && currentAnimation != DOWNBOAT) {
 				setAnimation(DOWNBOAT, downBoatSprites, 10);
 			}
@@ -175,20 +154,6 @@ public class Player extends Entity {
 			}
 		}
 		if(left) {
-			
-			// check if on water
-			boolean current = onWater;
-			if(tileMap.getIndex(ydest / tileSize, xdest / tileSize) == 4) {
-				onWater = true;
-			}
-			else {
-				onWater = false;
-			}
-			// if going from land to water
-			if(!current && onWater) {
-				JukeBox.play("splash");
-			}
-			
 			if(onWater && currentAnimation != LEFTBOAT) {
 				setAnimation(LEFTBOAT, leftBoatSprites, 10);
 			}
@@ -197,20 +162,6 @@ public class Player extends Entity {
 			}
 		}
 		if(right) {
-			
-			// check if on water
-			boolean current = onWater;
-			if(tileMap.getIndex(ydest / tileSize, xdest / tileSize) == 4) {
-				onWater = true;
-			}
-			else {
-				onWater = false;
-			}
-			// if going from land to water
-			if(!current && onWater) {
-				JukeBox.play("splash");
-			}
-			
 			if(onWater && currentAnimation != RIGHTBOAT) {
 				setAnimation(RIGHTBOAT, rightBoatSprites, 10);
 			}
@@ -219,20 +170,6 @@ public class Player extends Entity {
 			}
 		}
 		if(up) {
-			
-			// check if on water
-			boolean current = onWater;
-			if(tileMap.getIndex(ydest / tileSize, xdest / tileSize) == 4) {
-				onWater = true;
-			}
-			else {
-				onWater = false;
-			}
-			// if going from land to water
-			if(!current && onWater) {
-				JukeBox.play("splash");
-			}
-			
 			if(onWater && currentAnimation != UPBOAT) {
 				setAnimation(UPBOAT, upBoatSprites, 10);
 			}

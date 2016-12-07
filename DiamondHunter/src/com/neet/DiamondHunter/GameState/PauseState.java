@@ -39,14 +39,13 @@ public class PauseState extends GameState {
 		
 	}
 	public void handleInput() {
-		if(Keys.isPressed(Keys.K7)) {
+		if(Keys.isPressed(Keys.ESCAPE)) {
 			gsm.setPaused(false);
 			JukeBox.resumeLoop("music1");
 		}
-		if(Keys.isPressed(Keys.K8)) {
+		if(Keys.isPressed(Keys.F1)) {
 			gsm.setPaused(false);
 			gsm.setState(GameStateManager.MENU);
 		}
 	}
-	
 }

@@ -62,9 +62,8 @@ public class IntroState extends GameState {
 	}
 	
 	public void handleInput() {
-		if(Keys.isPressed(Keys.K6)) {
+		if(Keys.isPressed(Keys.ENTER)) {
 			gsm.setState(GameStateManager.MENU);
 		}
 	}
-	
 }
