@@ -108,7 +108,6 @@ public class PlayState extends GameState {
 		boxes = new ArrayList<Rectangle>();
 		eventStart = true;
 		eventStart();
-			
 	}
 	
 	private void populateDiamonds() {
@@ -167,7 +166,6 @@ public class PlayState extends GameState {
 		d = new Diamond(tileMap);
 		d.setTilePosition(13, 20);
 		diamonds.add(d);
-		
 	}
 	
 	private void populateItems() {
@@ -183,7 +181,6 @@ public class PlayState extends GameState {
 		item.setType(Item.BOAT);
 		item.setTilePosition(12, 4);
 		items.add(item);
-		
 	}
 	
 	public void update() {
@@ -248,7 +245,6 @@ public class PlayState extends GameState {
 				if(ali.size() != 0) {
 					JukeBox.play("tilechange");
 				}
-				
 			}
 		}
 		
@@ -275,7 +271,6 @@ public class PlayState extends GameState {
 				sparkles.add(s);
 			}
 		}
-		
 	}
 	
 	public void draw(Graphics2D g) {
@@ -309,7 +304,6 @@ public class PlayState extends GameState {
 		for(int i = 0; i < boxes.size(); i++) {
 			g.fill(boxes.get(i));
 		}
-		
 	}
 	
 	public void handleInput() {
@@ -326,7 +320,6 @@ public class PlayState extends GameState {
 	}
 	
 	//===============================================
-	
 	private void eventStart() {
 		eventTick++;
 		if(eventTick == 1) {

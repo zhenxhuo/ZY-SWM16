@@ -59,10 +59,8 @@ public class TileMap {
 	public void loadTiles(String s) {
 		
 		try {
-
-			tileset = ImageIO.read(
-				getClass().getResourceAsStream(s)
-			);
+			tileset = ImageIO.read(getClass().getResourceAsStream(s));
+			
 			numTilesAcross = tileset.getWidth() / tileSize;
 			tiles = new Tile[2][numTilesAcross];
 			
@@ -83,22 +81,18 @@ public class TileMap {
 						);
 				tiles[1][col] = new Tile(subimage, Tile.BLOCKED);
 			}
-			
 		}
+		
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void loadMap(String s) {
 		
 		try {
-			
 			InputStream in = getClass().getResourceAsStream(s);
-			BufferedReader br = new BufferedReader(
-						new InputStreamReader(in)
-					);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			
 			numCols = Integer.parseInt(br.readLine());
 			numRows = Integer.parseInt(br.readLine());
@@ -121,12 +115,11 @@ public class TileMap {
 					map[row][col] = Integer.parseInt(tokens[col]);
 				}
 			}
-			
 		}
+		
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public int getTileSize() { return tileSize; }
@@ -207,7 +200,6 @@ public class TileMap {
 		
 		if(x != xdest || y != ydest) moving = true;
 		else moving = false;
-		
 	}
 	
 	public void draw(Graphics2D g) {
@@ -231,11 +223,7 @@ public class TileMap {
 					y + row * tileSize,
 					null
 				);
-				
 			}
-			
 		}
-		
 	}
-	
 }

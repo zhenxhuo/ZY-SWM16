@@ -44,7 +44,6 @@ public class Hud {
 		
 		font = new Font("Arial", Font.PLAIN, 10);
 		textColor = new Color(47, 64, 126);
-		
 	}
 	
 	public void draw(Graphics2D g) {
@@ -79,7 +78,5 @@ public class Hud {
 			if(seconds < 10) Content.drawString(g, minutes + ":0" + seconds, 85, 3);
 			else Content.drawString(g, minutes + ":" + seconds, 85, 3);
 		}
-		
 	}
-	
 }
