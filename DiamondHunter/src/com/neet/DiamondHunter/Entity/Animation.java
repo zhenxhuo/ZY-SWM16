@@ -48,7 +48,6 @@ public class Animation {
 			currentFrame = 0;
 			timesPlayed++;
 		}
-		
 	}
 	
 	public int getFrame() { return currentFrame; }
@@ -56,5 +55,4 @@ public class Animation {
 	public BufferedImage getImage() { return frames[currentFrame]; }
 	public boolean hasPlayedOnce() { return timesPlayed > 0; }
 	public boolean hasPlayed(int i) { return timesPlayed == i; }
-	
 }

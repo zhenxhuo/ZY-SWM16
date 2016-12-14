@@ -67,7 +67,6 @@ public class Player extends Entity {
 		
 		animation.setFrames(downSprites);
 		animation.setDelay(10);
-		
 	}
 	
 	private void setAnimation(int i, BufferedImage[] bi, int d) {
@@ -180,12 +179,10 @@ public class Player extends Entity {
 		
 		// update position
 		super.update();
-		
 	}
 	
 	// Draw Player.
 	public void draw(Graphics2D g) {
 		super.draw(g);
 	}
-	
 }

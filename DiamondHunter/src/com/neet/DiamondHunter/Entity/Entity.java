@@ -146,7 +146,6 @@ public abstract class Entity {
 		}
 		
 		return true;
-		
 	}
 	
 	// Calculates the destination coordinates.
@@ -167,7 +166,6 @@ public abstract class Entity {
 		if(down && y < ydest) y += moveSpeed;
 		else down = false;
 		if(down && y > ydest) y = ydest;
-		
 	}
 	
 	public void update() {
@@ -184,7 +182,6 @@ public abstract class Entity {
 		
 		// update animation
 		animation.update();
-		
 	}
 	
 	// Draws the entity.
@@ -197,5 +194,4 @@ public abstract class Entity {
 			null
 		);
 	}
-	
 }
