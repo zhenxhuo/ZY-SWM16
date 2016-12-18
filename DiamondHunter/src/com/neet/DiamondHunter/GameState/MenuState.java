@@ -69,6 +69,7 @@ public class MenuState extends GameState {
 		if(currentOption == 0) {
 			gsm.setState(GameStateManager.PLAY);
 		}
+		// open map edit if pressed
 		if(currentOption == 1){
 			application.Main.main(null);
 		}
