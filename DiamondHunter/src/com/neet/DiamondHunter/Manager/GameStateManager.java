@@ -29,6 +29,7 @@ public class GameStateManager {
 	public static final int MENU = 1;
 	public static final int PLAY = 2;
 	public static final int GAMEOVER = 3;
+	public static final int MAP = 2;
 	
 	public GameStateManager() {
 		
@@ -54,6 +55,10 @@ public class GameStateManager {
 			gameStates[i].init();
 		}
 		else if(i == PLAY) {
+			gameStates[i] = new PlayState(this);
+			gameStates[i].init();
+		}
+		else if(i == MAP) {
 			gameStates[i] = new PlayState(this);
 			gameStates[i].init();
 		}
