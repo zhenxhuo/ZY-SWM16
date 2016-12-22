@@ -63,5 +63,4 @@ public class TileType {
 	public int getRow() {return row;}
 	public int getCol() {return col;}
 	public int getEntityType() {return hasObject;}
-	
 }

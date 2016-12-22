@@ -7,11 +7,11 @@ import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 
-import javafx.scene.canvas.*;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 
-public class Map extends Canvas {
+public class Map {
 
 	// position
 	private int x;
@@ -26,19 +26,10 @@ public class Map extends Canvas {
 	// tileset
 	private BufferedImage tileset;
 	private int numTilesAcross;
-	private TileType[][] tiles;
+	private WritableImage[][] tiles;
 
-	// drawing
-	private int rowOffset;
-	private int colOffset;
-	private int numRowsToDraw;
-	private int numColsToDraw;
-
-	public Map(int tileSize, double width, double height){
-		super(width, height);
-		this.tileSize = tileSize;
-		numRowsToDraw = Layout.HEIGHT / tileSize + 8;
-		numColsToDraw = Layout.WIDTH / tileSize + 8;
+	public Map(){
+		tileSize = 16;
 	}
 
 	public void loadTiles(String s){
@@ -46,7 +37,7 @@ public class Map extends Canvas {
 		try{
 			tileset = ImageIO.read(getClass().getResourceAsStream(s));
 			numTilesAcross = tileset.getWidth() / tileSize;
-			tiles = new TileType[2][numTilesAcross];
+			tiles = new WritableImage[2][numTilesAcross];
 
 			BufferedImage subimage1, subimage2;
 			for (int col = 0; col < numTilesAcross; col++){
@@ -75,8 +66,8 @@ public class Map extends Canvas {
 						}
 					}
 				}
-				tiles[0][col] = new TileType(wr1, TileType.VALID);
-				tiles[1][col] = new TileType(wr2, TileType.INVALID);
+				tiles[0][col] = wr1;
+				tiles[1][col] = wr2;
 			}
 		}
 		catch (Exception e){
@@ -110,20 +101,15 @@ public class Map extends Canvas {
 
 	public void drawImage(GraphicsContext gc) {
 
-		for (int row = rowOffset; row < rowOffset + numRowsToDraw; row++) {
-
-			if (row >= numRows)	break;
-
-			for (int col = colOffset; col < colOffset + numColsToDraw; col++) {
-
-				if (col >= numCols)	break;
+		for (int row = 0; row < numRows; row++){
+			for (int col = 0; col < numCols; col++){
 				if (map[row][col] == 0)	continue;
 
 				int rc = map[row][col];
 				int r = rc / numTilesAcross;
 				int c = rc % numTilesAcross;
 				gc.save();
-				gc.drawImage(tiles[r][c].getImage(), x + col * tileSize, y + row * tileSize);
+				gc.drawImage(tiles[r][c], x + col * tileSize, y + row * tileSize);
 			}
 		}
 	}
