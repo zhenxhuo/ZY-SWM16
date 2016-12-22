@@ -47,10 +47,10 @@ public class Player extends Entity {
 		
 		super(tm);
 		
-		width = 16;
-		height = 16;
-		cwidth = 12;
-		cheight = 12;
+		width	= 16;
+		height	= 16;
+		cwidth	= 12;
+		cheight	= 12;
 		
 		moveSpeed = 2;
 		
