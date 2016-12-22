@@ -122,31 +122,37 @@ public class TileMap {
 		}
 	}
 	
-	public int getTileSize() { return tileSize; }
-	public int getx() { return x; }
-	public int gety() { return y; }
-	public int getWidth() { return width; }
-	public int getHeight() { return height; }
-	public int getNumRows() { return numRows; }
+	public int getTileSize(){ return tileSize; }
+	public int getx()		{ return x; }
+	public int gety()		{ return y; }
+	public int getWidth()	{ return width; }
+	public int getHeight()	{ return height; }
+	public int getNumRows()	{ return numRows; }
 	public int getNumCols() { return numCols; }
+	
 	public int getType(int row, int col) {
 		int rc = map[row][col];
 		int r = rc / numTilesAcross;
 		int c = rc % numTilesAcross;
 		return tiles[r][c].getType();
 	}
+	
 	public int getIndex(int row, int col) {
 		return map[row][col];
 	}
+	
 	public boolean isMoving() { return moving; }
 	
 	public void setTile(int row, int col, int index) {
 		map[row][col] = index;
 	}
+	
 	public void replace(int i1, int i2) {
 		for(int row = 0; row < numRows; row++) {
 			for(int col = 0; col < numCols; col++) {
-				if(map[row][col] == i1) map[row][col] = i2;
+				if(map[row][col] == i1){
+					map[row][col] = i2;
+				}
 			}
 		}
 	}

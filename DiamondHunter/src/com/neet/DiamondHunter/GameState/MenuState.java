@@ -69,8 +69,9 @@ public class MenuState extends GameState {
 		if(currentOption == 0) {
 			gsm.setState(GameStateManager.PLAY);
 		}
+		//Open map editor if pressed
 		if(currentOption == 1){
-			application.Main.main(null);
+			gsm.setState(GameStateManager.EDIT);
 		}
 		if(currentOption == 2) {
 			System.exit(0);
