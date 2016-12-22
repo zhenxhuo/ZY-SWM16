@@ -13,7 +13,7 @@ public class Layout extends Pane {
 	public static final int HEIGHT2 = HEIGHT + 16;
 	public static final int SCALE = 3;
 	private Map map;
-	
+
 	public Layout(){
 		setPrefSize(WIDTH * SCALE, HEIGHT2 * SCALE);
 		map = new Map(16, WIDTH * SCALE, HEIGHT2 * SCALE);

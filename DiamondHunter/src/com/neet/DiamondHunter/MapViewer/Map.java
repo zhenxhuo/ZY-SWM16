@@ -55,20 +55,20 @@ public class Map extends Canvas {
 
 				WritableImage wr1, wr2;
 				wr1 = wr2 = null;
-				
+
 				if (subimage1 != null && subimage2 != null){
-					
+
 					wr1 = new WritableImage(subimage1.getWidth(), subimage1.getHeight());
 					wr2 = new WritableImage(subimage2.getWidth(), subimage2.getHeight());
 					PixelWriter pw1 = wr1.getPixelWriter();
 					PixelWriter pw2 = wr2.getPixelWriter();
-					
+
 					for (int x = 0; x < subimage1.getWidth(); x++){
 						for (int y = 0; y < subimage1.getHeight(); y++){
 							pw1.setArgb(x, y, subimage1.getRGB(x, y));
 						}
 					}
-					
+
 					for (int x = 0; x < subimage2.getWidth(); x++){
 						for (int y = 0; y < subimage2.getHeight(); y++){
 							pw2.setArgb(x, y, subimage2.getRGB(x, y));

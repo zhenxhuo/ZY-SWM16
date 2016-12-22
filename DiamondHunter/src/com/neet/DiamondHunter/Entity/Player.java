@@ -40,7 +40,7 @@ public class Player extends Entity {
 	private int totalDiamonds;
 	private boolean hasBoat;
 	private boolean hasAxe;
-	private boolean onWater;
+	public static boolean onWater;
 	private long ticks;
 	
 	public Player(TileMap tm) {
