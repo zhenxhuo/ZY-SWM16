@@ -7,6 +7,11 @@ package com.neet.DiamondHunter.GameState;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import com.neet.DiamondHunter.Entity.Diamond;
@@ -22,98 +27,98 @@ import com.neet.DiamondHunter.Manager.Keys;
 import com.neet.DiamondHunter.TileMap.TileMap;
 
 public class PlayState extends GameState {
-	
+
 	// player
 	private Player player;
-	
+
 	// tilemap
 	private TileMap tileMap;
-	
+
 	// diamonds
 	private ArrayList<Diamond> diamonds;
-	
+
 	// items
 	private ArrayList<Item> items;
-	
+
 	// sparkles
 	private ArrayList<Sparkle> sparkles;
-	
+
 	// camera position
 	private int xsector;
 	private int ysector;
 	private int sectorSize; 
-	
+
 	// hud
 	private Hud hud;
-	
+
 	// events
 	private boolean blockInput;
 	private boolean eventStart;
 	private boolean eventFinish;
 	private int eventTick;
-	
+
 	// transition box
 	private ArrayList<Rectangle> boxes;
-	
+
 	public PlayState(GameStateManager gsm) {
 		super(gsm);
 	}
-	
+
 	public void init() {
-		
+
 		// create lists
 		diamonds = new ArrayList<Diamond>();
 		sparkles = new ArrayList<Sparkle>();
 		items = new ArrayList<Item>();
-		
+
 		// load map
 		tileMap = new TileMap(16);
 		tileMap.loadTiles("/Tilesets/testtileset.gif");
 		tileMap.loadMap("/Maps/testmap.map");
-		
+
 		// create player
 		player = new Player(tileMap);
-		
+
 		// fill lists
 		populateDiamonds();
 		populateItems();
-		
+
 		// initialize player
 		player.setTilePosition(17, 17);
 		player.setTotalDiamonds(diamonds.size());
-		
+
 		// set up camera position
 		sectorSize = GamePanel.WIDTH;
 		xsector = player.getx() / sectorSize;
 		ysector = player.gety() / sectorSize;
 		tileMap.setPositionImmediately(-xsector * sectorSize, -ysector * sectorSize);
-		
+
 		// load hud
 		hud = new Hud(player, diamonds);
-		
+
 		// load music
 		JukeBox.load("/Music/bgmusic.mp3", "music1");
 		JukeBox.setVolume("music1", -10);
 		JukeBox.loop("music1", 1000, 1000, JukeBox.getFrames("music1") - 1000);
 		JukeBox.load("/Music/finish.mp3", "finish");
 		JukeBox.setVolume("finish", -10);
-		
+
 		// load sfx
 		JukeBox.load("/SFX/collect.wav", "collect");
 		JukeBox.load("/SFX/mapmove.wav", "mapmove");
 		JukeBox.load("/SFX/tilechange.wav", "tilechange");
 		JukeBox.load("/SFX/splash.wav", "splash");
-		
+
 		// start event
 		boxes = new ArrayList<Rectangle>();
 		eventStart = true;
 		eventStart();
 	}
-	
+
 	private void populateDiamonds() {
-		
+
 		Diamond d;
-		
+
 		d = new Diamond(tileMap);
 		d.setTilePosition(20, 20);
 		d.addChange(new int[] { 23, 19, 1 });
@@ -132,7 +137,7 @@ public class PlayState extends GameState {
 		d.setTilePosition(4, 34);
 		d.addChange(new int[] { 31, 21, 1 });
 		diamonds.add(d);
-		
+
 		d = new Diamond(tileMap);
 		d.setTilePosition(28, 19);
 		diamonds.add(d);
@@ -167,35 +172,108 @@ public class PlayState extends GameState {
 		d.setTilePosition(13, 20);
 		diamonds.add(d);
 	}
-	
-	private void populateItems() {
-		
+
+	private void populateItems(){
+
+		int[] itemPos = getItemCoord();
 		Item item;
-		
-		item = new Item(tileMap);
-		item.setType(Item.AXE);
-		item.setTilePosition(26, 37);
-		items.add(item);
-		
-		item = new Item(tileMap);
-		item.setType(Item.BOAT);
-		item.setTilePosition(12, 4);
-		items.add(item);
+
+		if(itemPos == null){
+			item = new Item(tileMap);
+			item.setType(Item.AXE);
+			item.setTilePosition(26, 37);
+			items.add(item);
+
+			item = new Item(tileMap);
+			item.setType(Item.BOAT);
+			item.setTilePosition(12, 4);
+			items.add(item);
+		}else{
+			item = new Item(tileMap);
+			item.setType(Item.AXE);
+			item.setTilePosition(itemPos[0],itemPos[1]);
+			items.add(item);
+
+			item = new Item(tileMap);
+			item.setType(Item.BOAT);
+			item.setTilePosition(itemPos[2],itemPos[3]);
+			items.add(item);
+		}
 	}
-	
+
+	/**
+	 * Reads the file for item coordinates.
+	 * If file does not exist, create file with default items position.
+	 * Returns item coordinates in order of AXE_xaxis, AXE_yaxis, BOAT_xaxis, BOAT_yaxis
+	 */
+	private int[] getItemCoord(){
+		File itemCoord = new File("Resources/Item.location");
+
+		//If the file does not exist
+		if(!itemCoord.exists() || itemCoord.isDirectory()){
+			try{
+				//Create the file first. If this fails, NullPointerException will be thrown
+				if(itemCoord.createNewFile()){
+					FileWriter wrItem = new FileWriter(itemCoord);
+					wrItem.write("26,37,12,4"); //The default position of axe and boat
+					wrItem.close();
+				}
+			}
+			catch (IOException e){
+				System.err.println("Unable to create or write file");
+				e.printStackTrace();
+			}
+		}
+
+		//File exist and is ready to be read
+		if(itemCoord.canRead()){
+			try{
+				FileInputStream rdItemCoords = new FileInputStream(itemCoord);
+				byte[] data = new byte[(int) itemCoord.length()];
+
+				//Read the entire file
+				rdItemCoords.read(data);
+				rdItemCoords.close();
+				String[] strItemCoords = new String(data, "UTF-8").split(",");
+
+				//Get coordinates
+				int[] itemCoords = new int[strItemCoords.length];
+				for(int i = 0; i < strItemCoords.length; i++){
+					itemCoords[i] = Integer.parseInt(strItemCoords[i]);
+				}
+				return itemCoords;
+			}
+
+			catch (FileNotFoundException e){
+				System.err.println("File does not exist");
+				e.printStackTrace();
+			}
+
+			catch (IOException e){
+				System.err.println("No read access to file");
+				e.printStackTrace();
+			}
+
+		}else{
+			System.err.println("Error reading file");
+			return null;
+		}
+		return null;
+	}
+
 	public void update() {
-		
+
 		// check keys
 		handleInput();
-		
+
 		// check events
 		if(eventStart) eventStart();
 		if(eventFinish) eventFinish();
-		
+
 		if(player.numDiamonds() == player.getTotalDiamonds()) {
 			eventFinish = blockInput = true;
 		}
-		
+
 		// update camera
 		int oldxs = xsector;
 		int oldys = ysector;
@@ -203,40 +281,40 @@ public class PlayState extends GameState {
 		ysector = player.gety() / sectorSize;
 		tileMap.setPosition(-xsector * sectorSize, -ysector * sectorSize);
 		tileMap.update();
-		
+
 		if(oldxs != xsector || oldys != ysector) {
 			JukeBox.play("mapmove");
 		}
-		
+
 		if(tileMap.isMoving()) return;
-		
+
 		// update player
 		player.update();
-		
+
 		// update diamonds
 		for(int i = 0; i < diamonds.size(); i++) {
-			
+
 			Diamond d = diamonds.get(i);
 			d.update();
-			
+
 			// player collects diamond
 			if(player.intersects(d)) {
-				
+
 				// remove from list
 				diamonds.remove(i);
 				i--;
-				
+
 				// increment amount of collected diamonds
 				player.collectedDiamond();
-				
+
 				// play collect sound
 				JukeBox.play("collect");
-				
+
 				// add new sparkle
 				Sparkle s = new Sparkle(tileMap);
 				s.setPosition(d.getx(), d.gety());
 				sparkles.add(s);
-				
+
 				// make any changes to tile map
 				ArrayList<int[]> ali = d.getChanges();
 				for(int[] j : ali) {
@@ -247,7 +325,7 @@ public class PlayState extends GameState {
 				}
 			}
 		}
-		
+
 		// update sparkles
 		for(int i = 0; i < sparkles.size(); i++) {
 			Sparkle s = sparkles.get(i);
@@ -257,7 +335,7 @@ public class PlayState extends GameState {
 				i--;
 			}
 		}
-		
+
 		// update items
 		for(int i = 0; i < items.size(); i++) {
 			Item item = items.get(i);
@@ -272,40 +350,40 @@ public class PlayState extends GameState {
 			}
 		}
 	}
-	
+
 	public void draw(Graphics2D g) {
-		
+
 		// draw tilemap
 		tileMap.draw(g);
-		
+
 		// draw player
 		player.draw(g);
-		
+
 		// draw diamonds
 		for(Diamond d : diamonds) {
 			d.draw(g);
 		}
-		
+
 		// draw sparkles
 		for(Sparkle s : sparkles) {
 			s.draw(g);
 		}
-		
+
 		// draw items
 		for(Item i : items) {
 			i.draw(g);
 		}
-		
+
 		// draw hud
 		hud.draw(g);
-		
+
 		// draw transition boxes
 		g.setColor(java.awt.Color.BLACK);
 		for(int i = 0; i < boxes.size(); i++) {
 			g.fill(boxes.get(i));
 		}
 	}
-	
+
 	public void handleInput() {
 		if(Keys.isPressed(Keys.ESCAPE)) {
 			JukeBox.stop("music1");
@@ -318,7 +396,7 @@ public class PlayState extends GameState {
 		if(Keys.isDown(Keys.DOWN)) player.setDown();
 		if(Keys.isPressed(Keys.SPACE)) player.setAction();
 	}
-	
+
 	//===============================================
 	private void eventStart() {
 		eventTick++;
@@ -345,7 +423,7 @@ public class PlayState extends GameState {
 			eventTick = 0;
 		}
 	}
-	
+
 	private void eventFinish() {
 		eventTick++;
 		if(eventTick == 1) {
