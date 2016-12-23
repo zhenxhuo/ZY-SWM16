@@ -117,4 +117,9 @@ public class Map {
 			}
 		}
 	}
+	//Retrieves tile image type from Map.loadmap method
+	public int getTileImageFromMap(int r, int c) { return map[r][c];}
+	public int getNumRows() { return numRows;}
+	public int getNumCols() { return numCols;}
+	public int getTileSize() { return tileSize;}
 }

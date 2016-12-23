@@ -1,5 +1,9 @@
 package com.neet.DiamondHunter.MapViewer;
 
+/**
+ * Contains all information of a single tile.
+ */
+
 public class TileType {
 
 	private int tileImageType;
@@ -54,7 +58,7 @@ public class TileType {
 
 	public void setEntityType(int entityType) {
 		this.hasObject = entityType;
-		setEntity((this.hasObject != -1) ? true : false);
+		setEntity((this.hasObject != 0) ? true : false);
 	}
 
 	public boolean isObject() {return isObject;}

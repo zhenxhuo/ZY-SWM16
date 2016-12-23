@@ -20,7 +20,7 @@
 				<StackPane fx:id="mapStack">
 					<children>
 						<Canvas fx:id="mapCanvas" height="640.0" width="640.0" />
-						<GridPane fx:id="tileMapping"></GridPane>
+						<GridPane fx:id="mapGrid"></GridPane>
 					</children>
 				</StackPane>
 			</center>
@@ -43,17 +43,6 @@
 							onAction="#playGame"
 							style="-fx-background-color: rgba(255, 255,255, 0.5); -fx-border-color: #000000; -fx-border-width: 5; -fx-border-radius: 5;"
 							text="PLAY" textAlignment="CENTER">
-							<font>
-								<Font size="24.0" />
-							</font>
-							<VBox.margin>
-								<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-							</VBox.margin>
-						</Button>
-						<Button fx:id="btnSave" maxWidth="256" mnemonicParsing="false"
-							onAction="#saveCoor"
-							style="-fx-background-color: rgba(255, 255,255, 0.5); -fx-border-width: 5; -fx-border-color: #000000; -fx-border-radius: 5;"
-							text="SAVE" textAlignment="CENTER">
 							<font>
 								<Font size="24.0" />
 							</font>
