@@ -1,33 +1,28 @@
-/* Get the position of Diamonds
- * and return the value
- * Get Diamonds sprite
- * */
+//Handles diamonds in the GridPane
 
 package com.neet.DiamondHunter.MapViewer;
+
 import com.neet.DiamondHunter.Manager.Content;
 
 import javafx.scene.image.WritableImage;
 
-/**
- * Handles diamonds in the GridPane
- */
-public class ShowDiamonds{
+public class ShowDiamond{
 
 	private int[] coordinate;
 	private static int coordCount;
 
-	public ShowDiamonds(){
-		getEntityPosition();
+	public ShowDiamond(){
+		getObjectPosition();
 	}
 
-	public void getEntityPosition() {
+	public void getObjectPosition() {
 		//3 indicates line 3 which is the Diamonds's coordinate
 		coordinate = ObjectLocation.getLocation(3);
 		coordCount = 0;
 	}
 
-	public WritableImage getEntity() {
-		return new ImageConversion(Content.DIAMOND[0][0]).getWrImg();
+	public WritableImage getObject() {
+		return new ImageConvert(Content.DIAMOND[0][0]).getWrImg();
 	}
 
 	public boolean compareCoordinates(int row, int col) {
@@ -42,7 +37,7 @@ public class ShowDiamonds{
 		return false;
 	}
 
-	public void updateEntityPosition() {
+	public void updateObjectPosition() {
 		String coords = Integer.toString(coordinate[0]) + "," + Integer.toString(coordinate[1]);
 		ObjectLocation.overwriteFile(coords,2);
 	}

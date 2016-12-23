@@ -1,8 +1,6 @@
-package com.neet.DiamondHunter.MapViewer;
+//Contains all information of a single tile.
 
-/**
- * Contains all information of a single tile.
- */
+package com.neet.DiamondHunter.MapViewer;
 
 public class TileType {
 

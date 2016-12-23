@@ -1,8 +1,4 @@
-/* Get position of axe and boat
- * and return the value
- * Update position of axe and boat
- * Get axe and boat sprites
- * */
+//Handles Axe and Boat on Map Viewer
 
 package com.neet.DiamondHunter.MapViewer;
 
@@ -10,7 +6,6 @@ import com.neet.DiamondHunter.Manager.Content;
 
 import javafx.scene.image.WritableImage;
 
-//Handles axe and boat entity for the GridPane.
 public class ShowAxeBoat {
 
 	private int[] coordinates;
@@ -21,19 +16,19 @@ public class ShowAxeBoat {
 
 	public ShowAxeBoat() {
 		coordinates = new int[4];
-		getEntityPosition();
+		getObjectPosition();
 	}
 
-	public void getEntityPosition(){
+	public void getObjectPosition(){
 		coordinates = ObjectLocation.getLocation(1);
 	}
 
 	public WritableImage getObject(int type){
-		if(type == BOAT){
-			return new ImageConversion(Content.ITEMS[1][0]).getWrImg();
+		if(type == AXE){
+			return new ImageConvert(Content.ITEMS[1][1]).getWrImg();
 		}
-		else if(type == AXE){
-			return new ImageConversion(Content.ITEMS[1][1]).getWrImg();
+		else if(type == BOAT){
+			return new ImageConvert(Content.ITEMS[1][0]).getWrImg();
 		}
 		return null;
 	}
@@ -48,7 +43,7 @@ public class ShowAxeBoat {
 		return false;
 	}
 
-	public void updateEntityPosition(int axeRow, int axeCol, int boatRow, int boatCol) {
+	public void updateObjectPosition(int axeRow, int axeCol, int boatRow, int boatCol) {
 		coordinates[0] = axeRow;
 		coordinates[1] = axeCol;
 		coordinates[2] = boatRow;

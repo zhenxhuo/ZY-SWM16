@@ -11,9 +11,8 @@ import javafx.scene.image.WritableImage;
  * This class is able to convert BufferedImage or WritableImage to output in SwingJavaFX hybrid or vanilla JavaFX.
  * A list of images or a single image is also supported.
  * This class is generally used to process BufferedImage to JavaFX and vice versa.
- *
  */
-public class ImageConversion {
+public class ImageConvert {
 
 	private BufferedImage buffImg; 
 	private BufferedImage[] buffImgList;
@@ -24,7 +23,7 @@ public class ImageConversion {
 	 * Single BufferedImage conversion constructor
 	 * @param buffImg The BufferedImage to be processed
 	 */
-	public ImageConversion(BufferedImage buffImg) {
+	public ImageConvert(BufferedImage buffImg) {
 		this.buffImg = buffImg;
 	}
 
@@ -32,7 +31,7 @@ public class ImageConversion {
 	 * Multi BufferedImage conversion constructor
 	 * @param buffImgList The array of BufferedImage to be processed
 	 */
-	public ImageConversion(BufferedImage[] buffImgList) {
+	public ImageConvert(BufferedImage[] buffImgList) {
 		this.buffImgList = buffImgList;
 	}
 
@@ -40,7 +39,7 @@ public class ImageConversion {
 	 * Single WritableImage conversion constructor
 	 * @param wrImg The WritableImage to be processed
 	 */
-	public ImageConversion(WritableImage wrImg) {
+	public ImageConvert(WritableImage wrImg) {
 		this.wrImg = wrImg;
 	}
 
@@ -48,7 +47,7 @@ public class ImageConversion {
 	 * Multi WritableImage conversion constructor
 	 * @param wrImgList The array of WritableImage to be processed
 	 */
-	public ImageConversion(WritableImage[] wrImgList) {
+	public ImageConvert(WritableImage[] wrImgList) {
 		this.wrImgList = wrImgList;
 	}
 

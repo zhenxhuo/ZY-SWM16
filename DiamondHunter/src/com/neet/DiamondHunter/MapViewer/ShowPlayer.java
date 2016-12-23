@@ -1,36 +1,28 @@
-/* Get the position of player
- * and return the value
- * Get player sprite
- * */
+//Handles player in the GridPane
 
 package com.neet.DiamondHunter.MapViewer;
 
-import com.neet.DiamondHunter.Entity.Player;
 import com.neet.DiamondHunter.Manager.Content;
 
 import javafx.scene.image.WritableImage;
 
-/**
- * Handles player in the GridPane
- *
- */
 public class ShowPlayer{
 
 	private int[] coordinate;
 
 	public ShowPlayer(){
 		coordinate = new int[2];
-		getEntityPosition();
-		updateEntityPosition();
+		getObjectPosition();
+		updateObjectPosition();
 	}
 
-	public void getEntityPosition() {
+	public void getObjectPosition() {
 		//2 indicates line 2 which is the player's coordinate
 		coordinate = ObjectLocation.getLocation(2);
 	}
 
-	public WritableImage getEntity() {
-		WritableImage player = Player.onWater ? new ImageConversion(Content.PLAYER[0][5]).getWrImg() : new ImageConversion(Content.PLAYER[0][0]).getWrImg();
+	public WritableImage getObject() {
+		WritableImage player = new ImageConvert(Content.PLAYER[0][0]).getWrImg();
 		return player;
 	}
 
@@ -38,9 +30,8 @@ public class ShowPlayer{
 		return (row == coordinate[0] && col == coordinate[1]) ? true : false;
 	}
 
-	public void updateEntityPosition() {
+	public void updateObjectPosition() {
 		String coords = Integer.toString(coordinate[0]) + "," + Integer.toString(coordinate[1]);
 		ObjectLocation.overwriteFile(coords,1);
 	}
-
 }

@@ -1,12 +1,8 @@
 package com.neet.DiamondHunter.MapViewer;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import com.neet.DiamondHunter.Main.Game;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.*;
 import javafx.scene.control.Button;
@@ -31,14 +27,14 @@ import javafx.scene.layout.VBox;
  * Main controller for the interface. Interactions in the
  * MapView.fxml is computed here.
  */
-public class MapController implements Initializable {
+public class MapController{
 
-	//All entity instantiation
-	private ShowAxeBoat as;
-	private ShowPlayer sp;
-	private ShowDiamonds sd;
+	//All objects instantiation
+	private ShowAxeBoat	axeBoat;
+	private ShowPlayer	player;
+	private ShowDiamond	diamonds;
 
-	//Temporary store for the updated coordinates
+	//Temporary storage for the updated coordinates
 	private int[] tmpLocation = new int[4];
 	private String itemType = "";
 
@@ -63,43 +59,45 @@ public class MapController implements Initializable {
 	@FXML
 	private Button btnPlay;
 	@FXML
+	private Button btnAxe;
+	@FXML
+	private Button btnBoat;
+	@FXML
 	private Button btnExit;
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources){
+	public void initialize(){
 
 		ObjectLocation.checkExist();
 		// At launch of Map Viewer, the game itself is never launched
 		isGameLaunched = false;
 		// MapPane has all the loaders for the map
 		dhmap = new Map();
-		as = new ShowAxeBoat();
-		sp = new ShowPlayer();
-		sd = new ShowDiamonds();
+		axeBoat = new ShowAxeBoat();
+		player = new ShowPlayer();
+		diamonds = new ShowDiamond();
 
 		// The info display box cannot be edited by user
 		infoText.setEditable(false);
 		infoText.setText("Welcome to Diamond Hunter Map Editor!");
 		initMapCanvas();
 
-		// Initialises the size of the StackPane that contains the map in canvas
-		// and GridPane
+		// Initializes size of the StackPane that contains the map in canvas and GridPane
 		mapStack.relocate(20, 20);
 		mapStack.setPrefSize((dhmap.getNumRows() * dhmap.getTileSize()),(dhmap.getNumCols() * dhmap.getTileSize()));
 		tileVBox.setOnMouseEntered(e -> {
-			infoText.setText("Welcome to Map Viewer!\nJust drag and drop the axe or boat to any legal location you wish!\nThe location is saved automatically!");
+			infoText.setText("This Diamond Hunter Map Editor. Drag and drop the axe or boat to change location. Changes is saved automatically.");
 		});
 		mainPane.setOnMouseEntered(e -> {
-			infoText.setText("Welcome to Map Viewer!\nJust drag and drop the axe or boat to any legal location you wish!\nThe location is saved automatically!");
-		});;
+			infoText.setText("This Diamond Hunter Map Editor. Drag and drop the axe or boat to change location. Changes is saved automatically.");
+		});
 		btnPlay.setOnMouseEntered(e -> {
-			infoText.setText("Play Diamond Hunter with the current axe and boat configuration");
+			infoText.setText("Play Diamond Hunter with current axe and boat location");
 		});
 		btnExit.setOnMouseEntered(e -> {
 			infoText.setText("Exit Diamond Hunter Map Editor");
 		});
 
-		mainPane.setMinSize(mapStack.getPrefWidth() + 100, mapStack.getPrefHeight() + 100);
+		mainPane.setMinSize(mapStack.getPrefWidth() + 16, mapStack.getPrefHeight() + 16);
 		initMapGrid();
 	}
 
@@ -138,8 +136,8 @@ public class MapController implements Initializable {
 
 		Label label = new Label();
 		label.setMinSize(dhmap.getTileSize(), dhmap.getTileSize());
-		String tileText = "Coordinate: "+ Integer.toString(rowIndex) +" x "+ Integer.toString(colIndex)
-		+"\nTile Image: ";
+		String tileText = "Coordinate: ("+ Integer.toString(rowIndex) +","+ Integer.toString(colIndex)
+		+")\nTile Image: ";
 
 		if (tileInfo[rowIndex][colIndex].getTileImageType() == TileType.GREENS) {
 			tileText += "Green tile";
@@ -156,8 +154,8 @@ public class MapController implements Initializable {
 		}
 
 		//display axe on top of tile
-		if(as.compareCoordinates(rowIndex, colIndex, ShowAxeBoat.AXE)){
-			label.setGraphic(new ImageView(as.getObject(ShowAxeBoat.AXE)));
+		if(axeBoat.compareCoordinates(rowIndex, colIndex, ShowAxeBoat.AXE)){
+			label.setGraphic(new ImageView(axeBoat.getObject(ShowAxeBoat.AXE)));
 			tileInfo[rowIndex][colIndex].setEntityType(TileType.AXE);
 			tileText += "\nAn axe!";
 			itemType = "Axe";
@@ -166,8 +164,8 @@ public class MapController implements Initializable {
 			dragSource(label, itemType);
 		}
 		//display boat on top of tile
-		else if(as.compareCoordinates(rowIndex, colIndex, ShowAxeBoat.BOAT)){
-			label.setGraphic(new ImageView(as.getObject(ShowAxeBoat.BOAT)));
+		else if(axeBoat.compareCoordinates(rowIndex, colIndex, ShowAxeBoat.BOAT)){
+			label.setGraphic(new ImageView(axeBoat.getObject(ShowAxeBoat.BOAT)));
 			tileInfo[rowIndex][colIndex].setEntityType(TileType.BOAT);
 			tileText += "\nA boat!";
 			itemType = "Boat";
@@ -176,14 +174,14 @@ public class MapController implements Initializable {
 			dragSource(label, itemType);
 		}
 		//display player initial position on map
-		else if(sp.compareCoordinates(rowIndex, colIndex)){
-			label.setGraphic(new ImageView(sp.getEntity()));
+		else if(player.compareCoordinates(rowIndex, colIndex)){
+			label.setGraphic(new ImageView(player.getObject()));
 			tileInfo[rowIndex][colIndex].setEntityType(TileType.PLAYER);
 			tileText += "\nYou are here!";
 		}
 		// display diamonds initial position on map
-		else if(sd.compareCoordinates(rowIndex, colIndex)) {
-			label.setGraphic(new ImageView(sd.getEntity()));
+		else if(diamonds.compareCoordinates(rowIndex, colIndex)) {
+			label.setGraphic(new ImageView(diamonds.getObject()));
 			tileInfo[rowIndex][colIndex].setEntityType(TileType.DIAMOND);
 			tileText += "\nA diamond!";
 		}
@@ -213,12 +211,12 @@ public class MapController implements Initializable {
 	 */
 	private void dragSource(Label source, String item) {
 		source.setOnDragDetected((MouseEvent e) -> {
-			Dragboard db = source.startDragAndDrop(TransferMode.MOVE);
+			Dragboard drag = source.startDragAndDrop(TransferMode.MOVE);
 			ClipboardContent content = new ClipboardContent();
 			content.putImage(((ImageView) (source.getGraphic())).getImage());
-			db.setContent(content);
+			drag.setContent(content);
 
-			infoText.setText("Dragging: " + item + "\nYou can only place the " + item + " in non-red tiles");
+			infoText.setText("Dragging: " + item + "\nYou can only place the " + item + " in non-black tiles");
 			itemType = item;
 			e.consume();
 		});
@@ -234,9 +232,9 @@ public class MapController implements Initializable {
 	 * Method to drop axe/boat on any valid tile
 	 * 
 	 * @param target The label where the dragging object is currently on
-	 * @param ti The tile information of every tile in the map
+	 * @param tInfo The tile information of every tile in the map
 	 */
-	private void dropTarget(Label target, TileType ti) {
+	private void dropTarget(Label target, TileType tInfo) {
 
 		target.setOnDragOver(e -> {
 			if (e.getGestureSource() != target) {
@@ -248,10 +246,10 @@ public class MapController implements Initializable {
 		target.setOnDragEntered(e -> {
 			if (e.getGestureSource() != target && e.getDragboard().hasContent(DataFormat.IMAGE)) {
 				// if the tile has items on it or is blocked, set colour to red
-				if (ti.isObject() || !ti.isNormal()) {
-					target.setStyle("-fx-background-color: rgba(255, 0, 0, 0.5)");
+				if (tInfo.isObject() || !tInfo.isNormal()) {
+					target.setStyle("-fx-background-color: rgba(0,0,0,1)");
 				} else {
-					target.setStyle("-fx-background-color: rgba(0, 0, 0, 0)");
+					target.setStyle("-fx-background-color: rgba(0,0,0,0)");
 				}
 			}
 			e.consume();
@@ -261,7 +259,7 @@ public class MapController implements Initializable {
 			target.setStyle(null);
 		});
 
-		if (!ti.isObject() && ti.isNormal()) {
+		if (!tInfo.isObject() && tInfo.isNormal()) {
 			target.setOnDragDropped((DragEvent e) -> {
 
 				Dragboard drag = e.getDragboard();
@@ -293,9 +291,9 @@ public class MapController implements Initializable {
 	 * Saves the changed coordinates of the moved item as well.
 	 */
 	private void updateGridPane() {
-		as.getEntityPosition();
-		sp.getEntityPosition();
-		sd.getEntityPosition();
+		axeBoat.getObjectPosition();
+		player.getObjectPosition();
+		diamonds.getObjectPosition();
 		mapGrid.getChildren().clear();
 		tileInfo = new TileType[dhmap.getNumRows()][dhmap.getNumCols()];
 
@@ -313,7 +311,7 @@ public class MapController implements Initializable {
 	 */
 	private void saveLocation() {
 		ObjectLocation.overwriteMode = true;
-		as.updateEntityPosition(tmpLocation[0], tmpLocation[1], tmpLocation[2], tmpLocation[3]);
+		axeBoat.updateObjectPosition(tmpLocation[0], tmpLocation[1], tmpLocation[2], tmpLocation[3]);
 	}
 
 	@FXML

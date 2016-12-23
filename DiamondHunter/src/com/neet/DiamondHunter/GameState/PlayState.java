@@ -229,11 +229,11 @@ public class PlayState extends GameState {
 		//File exist and is ready to be read
 		if(itemLocation.canRead()){
 			try{
-				BufferedReader brTest = new BufferedReader(new FileReader(itemLocation));
-				String text = brTest.readLine();
-				brTest.close();
+				BufferedReader feed = new BufferedReader(new FileReader(itemLocation));
+				String data = feed.readLine();
+				feed.close();
 
-				String[] strItemCoords = text.split(",");
+				String[] strItemCoords = data.split(",");
 
 				//Get coordinates
 				int[] itemCoords = new int[strItemCoords.length];
