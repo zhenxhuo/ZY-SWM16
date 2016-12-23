@@ -3,11 +3,6 @@ package com.neet.DiamondHunter.MapViewer;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.neet.DiamondHunter.EntityViewer.AxeShip;
-import com.neet.DiamondHunter.EntityViewer.EntityDisplay;
-import com.neet.DiamondHunter.EntityViewer.ShowAxeShip;
-import com.neet.DiamondHunter.EntityViewer.ShowDiamonds;
-import com.neet.DiamondHunter.EntityViewer.ShowPlayer;
 import com.neet.DiamondHunter.Main.Game;
 
 import javafx.fxml.FXML;
@@ -33,16 +28,15 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 /**
- * Main controller for the interface. Any interaction in the
- * MapViewInterface.fxml is computed here.
- *
+ * Main controller for the interface. Interactions in the
+ * MapView.fxml is computed here.
  */
 public class MapController implements Initializable {
 
 	//All entity instantiation
-	private AxeShip as;
-	private EntityDisplay sp;
-	private EntityDisplay sd;
+	private ShowAxeBoat as;
+	private ShowPlayer sp;
+	private ShowDiamonds sd;
 
 	//Temporary store for the updated coordinates
 	private int[] tmpLocation = new int[4];
@@ -79,7 +73,7 @@ public class MapController implements Initializable {
 		isGameLaunched = false;
 		// MapPane has all the loaders for the map
 		dhmap = new Map();
-		as = new ShowAxeShip();
+		as = new ShowAxeBoat();
 		sp = new ShowPlayer();
 		sd = new ShowDiamonds();
 
@@ -110,8 +104,7 @@ public class MapController implements Initializable {
 	}
 
 	/**
-	 * Initialises the map in a non-FXML canvas and draws onto FXML canvas as a
-	 * whole.
+	 * Initialize the map in a non-FXML canvas and draws onto FXML canvas
 	 */
 	private void initMapCanvas() {
 		mapCanvas.setWidth((double) Map.WIDTH);
@@ -162,19 +155,9 @@ public class MapController implements Initializable {
 			tileText += "Water";
 		}
 
-		//display boat on top of tile
-		if(as.compareCoordinates(rowIndex, colIndex, ShowAxeShip.BOAT)){
-			label.setGraphic(new ImageView(as.getEntity(ShowAxeShip.BOAT)));
-			tileInfo[rowIndex][colIndex].setEntityType(TileType.BOAT);
-			tileText += "\nA boat!";
-			itemType = "Boat";
-			tmpLocation[2] = rowIndex;
-			tmpLocation[3] = colIndex;
-			dragSource(label, itemType);
-		}
 		//display axe on top of tile
-		else if(as.compareCoordinates(rowIndex, colIndex, ShowAxeShip.AXE)){
-			label.setGraphic(new ImageView(as.getEntity(ShowAxeShip.AXE)));
+		if(as.compareCoordinates(rowIndex, colIndex, ShowAxeBoat.AXE)){
+			label.setGraphic(new ImageView(as.getObject(ShowAxeBoat.AXE)));
 			tileInfo[rowIndex][colIndex].setEntityType(TileType.AXE);
 			tileText += "\nAn axe!";
 			itemType = "Axe";
@@ -182,15 +165,25 @@ public class MapController implements Initializable {
 			tmpLocation[1] = colIndex;
 			dragSource(label, itemType);
 		}
+		//display boat on top of tile
+		else if(as.compareCoordinates(rowIndex, colIndex, ShowAxeBoat.BOAT)){
+			label.setGraphic(new ImageView(as.getObject(ShowAxeBoat.BOAT)));
+			tileInfo[rowIndex][colIndex].setEntityType(TileType.BOAT);
+			tileText += "\nA boat!";
+			itemType = "Boat";
+			tmpLocation[2] = rowIndex;
+			tmpLocation[3] = colIndex;
+			dragSource(label, itemType);
+		}
 		//display player initial position on map
-		else if(sp.compareCoordinates(rowIndex, colIndex, EntityDisplay.UNIQUE)){
-			label.setGraphic(new ImageView(sp.getEntity(EntityDisplay.UNIQUE)));
+		else if(sp.compareCoordinates(rowIndex, colIndex)){
+			label.setGraphic(new ImageView(sp.getEntity()));
 			tileInfo[rowIndex][colIndex].setEntityType(TileType.PLAYER);
 			tileText += "\nYou are here!";
 		}
 		// display diamonds initial position on map
-		else if(sd.compareCoordinates(rowIndex, colIndex, EntityDisplay.UNIQUE)) {
-			label.setGraphic(new ImageView(sd.getEntity(EntityDisplay.UNIQUE)));
+		else if(sd.compareCoordinates(rowIndex, colIndex)) {
+			label.setGraphic(new ImageView(sd.getEntity()));
 			tileInfo[rowIndex][colIndex].setEntityType(TileType.DIAMOND);
 			tileText += "\nA diamond!";
 		}
@@ -238,7 +231,7 @@ public class MapController implements Initializable {
 	}
 
 	/**
-	 * Method to drop axe/boat on any good tile
+	 * Method to drop axe/boat on any valid tile
 	 * 
 	 * @param target The label where the dragging object is currently on
 	 * @param ti The tile information of every tile in the map
@@ -326,11 +319,8 @@ public class MapController implements Initializable {
 	@FXML
 	private void playGame() {
 		if (!isGameLaunched) {
-			Game.play();
-			//Game.getWindow().setAutoRequestFocus(true);
+			Game.main(null);
 			isGameLaunched = true;
-		}else{
-			//Game.getWindow().setVisible(true);
 		}
 	}
 
