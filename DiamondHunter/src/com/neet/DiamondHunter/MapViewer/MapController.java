@@ -23,7 +23,10 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-
+/**
+ * Main controller for the interface. Interactions in the
+ * MapView.fxml is computed here.
+ */
 public class MapController{
 
 	//All objects instantiation
@@ -283,7 +286,10 @@ public class MapController{
 		}
 	}
 
-	// Refreshes the GridPane 
+	/**
+	 * Refreshes the GridPane every time a drag and drop action is completed successfully.
+	 * Saves the changed coordinates of the moved item as well.
+	 */
 	private void updateGridPane() {
 		axeBoat.getObjectPosition();
 		player.getObjectPosition();
@@ -299,7 +305,10 @@ public class MapController{
 		}
 	}
 
- // save the coordinates
+	/**
+	 * Saves the coordinates of all items.
+	 * Switches the overwrite to true.
+	 */
 	private void saveLocation() {
 		ObjectLocation.overwriteMode = true;
 		axeBoat.updateObjectPosition(tmpLocation[0], tmpLocation[1], tmpLocation[2], tmpLocation[3]);
@@ -313,7 +322,7 @@ public class MapController{
 		}
 	}
 
-	//Exit
+	//Exits the Map Editing Mode
 	@FXML
 	private void exitMapView() {
 		System.exit(0);
