@@ -119,7 +119,7 @@ public class ObjectLocation {
 	public static void overwriteFile(String data, int line) {
 		checkExist();
 		try {
-			BufferedReader oldFile = new BufferedReader(new FileReader("Entity-Coordinates.txt"));
+			BufferedReader oldFile = new BufferedReader(new FileReader("Object.location"));
 			int count = 0;
 			String input = "";
 			String l = "";

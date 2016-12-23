@@ -17,8 +17,6 @@ public class MainFx extends Application {
 	        primaryStage.setTitle("Map Viewer");
 	        primaryStage.setScene(new Scene(root, 700, 275));
 	        primaryStage.show();
-	    
-		
 	}
 
 	public static void main(String[] args) {

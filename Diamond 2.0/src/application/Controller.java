@@ -24,14 +24,5 @@ public class Controller {
 			Scene scene = new Scene(base,750,750);
 			primaryStage.setScene(scene);
 			primaryStage.show();
-		
 		}
-
 }
-			
-		
-	
-
-	
-	
-

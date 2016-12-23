@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.Parent;
 
 public class Launcher extends Application{
-	
+
 	public static void main(String[] args){
 		launch(args);
 	}
@@ -20,12 +20,12 @@ public class Launcher extends Application{
 		try{
 			Parent base = FXMLLoader.load(getClass().getResource("MapView.fxml"));
 			primaryStage.setTitle("Diamond Hunter Map Viewer");
-			
+
 			Scene scene = new Scene(base);
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
 			primaryStage.show();
-			
+
 		}catch(Exception e) {e.printStackTrace();}
 	}
 }

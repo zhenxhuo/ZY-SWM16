@@ -7,9 +7,10 @@ package com.neet.DiamondHunter.GameState;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -207,14 +208,14 @@ public class PlayState extends GameState {
 	 * Returns item coordinates in order of AXE_xaxis, AXE_yaxis, BOAT_xaxis, BOAT_yaxis
 	 */
 	private int[] getItemCoord(){
-		File itemCoord = new File("Resources/Item.location");
+		File itemLocation = new File("Object.location");
 
 		//If the file does not exist
-		if(!itemCoord.exists() || itemCoord.isDirectory()){
+		if(!itemLocation.exists() || itemLocation.isDirectory()){
 			try{
 				//Create the file first. If this fails, NullPointerException will be thrown
-				if(itemCoord.createNewFile()){
-					FileWriter wrItem = new FileWriter(itemCoord);
+				if(itemLocation.createNewFile()){
+					FileWriter wrItem = new FileWriter(itemLocation);
 					wrItem.write("26,37,12,4"); //The default position of axe and boat
 					wrItem.close();
 				}
@@ -226,15 +227,13 @@ public class PlayState extends GameState {
 		}
 
 		//File exist and is ready to be read
-		if(itemCoord.canRead()){
+		if(itemLocation.canRead()){
 			try{
-				FileInputStream rdItemCoords = new FileInputStream(itemCoord);
-				byte[] data = new byte[(int) itemCoord.length()];
+				BufferedReader brTest = new BufferedReader(new FileReader(itemLocation));
+				String text = brTest.readLine();
+				brTest.close();
 
-				//Read the entire file
-				rdItemCoords.read(data);
-				rdItemCoords.close();
-				String[] strItemCoords = new String(data, "UTF-8").split(",");
+				String[] strItemCoords = text.split(",");
 
 				//Get coordinates
 				int[] itemCoords = new int[strItemCoords.length];
