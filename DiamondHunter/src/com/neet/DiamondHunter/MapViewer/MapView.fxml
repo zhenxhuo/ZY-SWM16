@@ -19,7 +19,7 @@
 			<center>
 				<StackPane fx:id="mapStack">
 					<children>
-						<Canvas fx:id="mvCanvas" height="640.0" width="640.0" />
+						<Canvas fx:id="mapCanvas" height="640.0" width="640.0" />
 						<GridPane fx:id="tileMapping"></GridPane>
 					</children>
 				</StackPane>
@@ -28,8 +28,8 @@
 				<VBox fx:id="tileVBox" style="-fx-background-color:#3E4FFF;"
 					BorderPane.alignment="CENTER">
 					<children>
-						<TextArea fx:id="tileInfoText" maxHeight="-Infinity"
-							minHeight="-Infinity" prefHeight="251.0" prefWidth="253.0"
+						<TextArea fx:id="infoText" maxHeight="-Infinity"
+							minHeight="-Infinity" prefHeight="256.0" prefWidth="256.0"
 							style="-fx-border-color: #000000; -fx-border-width: 5; -fx-border-radius: 5; -fx-background-radius: 5;"
 							wrapText="true">
 							<font>
@@ -39,12 +39,12 @@
 								<Insets top="8" bottom="8" left="4" right="4" />
 							</VBox.margin>
 						</TextArea>
-						<Button fx:id="btnPlayGame" maxWidth="256" mnemonicParsing="false"
+						<Button fx:id="btnPlay" maxWidth="256" mnemonicParsing="false"
 							onAction="#playGame"
 							style="-fx-background-color: rgba(255, 255,255, 0.5); -fx-border-color: #000000; -fx-border-width: 5; -fx-border-radius: 5;"
-							text="Play Game" textAlignment="CENTER">
+							text="PLAY" textAlignment="CENTER">
 							<font>
-								<Font name="8BIT WONDER Nominal" size="24.0" />
+								<Font size="24.0" />
 							</font>
 							<VBox.margin>
 								<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -53,9 +53,9 @@
 						<Button fx:id="btnSave" maxWidth="256" mnemonicParsing="false"
 							onAction="#saveCoor"
 							style="-fx-background-color: rgba(255, 255,255, 0.5); -fx-border-width: 5; -fx-border-color: #000000; -fx-border-radius: 5;"
-							text="Save" textAlignment="CENTER">
+							text="SAVE" textAlignment="CENTER">
 							<font>
-								<Font name="8BIT WONDER Nominal" size="24.0" />
+								<Font size="24.0" />
 							</font>
 							<VBox.margin>
 								<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -64,9 +64,9 @@
 						<Button fx:id="btnExit" maxWidth="256" mnemonicParsing="false"
 							onAction="#exitMapView"
 							style="-fx-background-color: rgba(255, 255,255, 0.5); -fx-border-color: #000000; -fx-border-width: 5; -fx-border-radius: 5;"
-							text="Exit" textAlignment="CENTER">
+							text="EXIT" textAlignment="CENTER">
 							<font>
-								<Font name="8BIT WONDER Nominal" size="24.0" />
+								<Font size="24.0" />
 							</font>
 							<VBox.margin>
 								<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

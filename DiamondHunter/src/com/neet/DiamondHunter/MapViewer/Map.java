@@ -28,6 +28,10 @@ public class Map {
 	private int numTilesAcross;
 	private WritableImage[][] tiles;
 
+	// dimensions
+	public static final int WIDTH = 640;
+	public static final int HEIGHT = 640;
+
 	public Map(){
 		tileSize = 16;
 	}
