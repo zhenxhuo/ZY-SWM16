@@ -7,11 +7,11 @@ import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 
-import javafx.scene.canvas.*;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 
-public class Map extends Canvas {
+public class Map {
 
 	// position
 	private int x;
@@ -26,19 +26,14 @@ public class Map extends Canvas {
 	// tileset
 	private BufferedImage tileset;
 	private int numTilesAcross;
-	private TileType[][] tiles;
+	private WritableImage[][] tiles;
 
-	// drawing
-	private int rowOffset;
-	private int colOffset;
-	private int numRowsToDraw;
-	private int numColsToDraw;
+	// dimensions
+	public static final int WIDTH = 640;
+	public static final int HEIGHT = 640;
 
-	public Map(int tileSize, double width, double height){
-		super(width, height);
-		this.tileSize = tileSize;
-		numRowsToDraw = Layout.HEIGHT / tileSize + 8;
-		numColsToDraw = Layout.WIDTH / tileSize + 8;
+	public Map(){
+		tileSize = 16;
 	}
 
 	public void loadTiles(String s){
@@ -46,7 +41,7 @@ public class Map extends Canvas {
 		try{
 			tileset = ImageIO.read(getClass().getResourceAsStream(s));
 			numTilesAcross = tileset.getWidth() / tileSize;
-			tiles = new TileType[2][numTilesAcross];
+			tiles = new WritableImage[2][numTilesAcross];
 
 			BufferedImage subimage1, subimage2;
 			for (int col = 0; col < numTilesAcross; col++){
@@ -55,28 +50,28 @@ public class Map extends Canvas {
 
 				WritableImage wr1, wr2;
 				wr1 = wr2 = null;
-				
+
 				if (subimage1 != null && subimage2 != null){
-					
+
 					wr1 = new WritableImage(subimage1.getWidth(), subimage1.getHeight());
 					wr2 = new WritableImage(subimage2.getWidth(), subimage2.getHeight());
 					PixelWriter pw1 = wr1.getPixelWriter();
 					PixelWriter pw2 = wr2.getPixelWriter();
-					
+
 					for (int x = 0; x < subimage1.getWidth(); x++){
 						for (int y = 0; y < subimage1.getHeight(); y++){
 							pw1.setArgb(x, y, subimage1.getRGB(x, y));
 						}
 					}
-					
+
 					for (int x = 0; x < subimage2.getWidth(); x++){
 						for (int y = 0; y < subimage2.getHeight(); y++){
 							pw2.setArgb(x, y, subimage2.getRGB(x, y));
 						}
 					}
 				}
-				tiles[0][col] = new TileType(wr1, TileType.VALID);
-				tiles[1][col] = new TileType(wr2, TileType.INVALID);
+				tiles[0][col] = wr1;
+				tiles[1][col] = wr2;
 			}
 		}
 		catch (Exception e){
@@ -110,21 +105,26 @@ public class Map extends Canvas {
 
 	public void drawImage(GraphicsContext gc) {
 
-		for (int row = rowOffset; row < rowOffset + numRowsToDraw; row++) {
-
-			if (row >= numRows)	break;
-
-			for (int col = colOffset; col < colOffset + numColsToDraw; col++) {
-
-				if (col >= numCols)	break;
+		for (int row = 0; row < numRows; row++){
+			for (int col = 0; col < numCols; col++){
 				if (map[row][col] == 0)	continue;
 
 				int rc = map[row][col];
 				int r = rc / numTilesAcross;
 				int c = rc % numTilesAcross;
 				gc.save();
-				gc.drawImage(tiles[r][c].getImage(), x + col * tileSize, y + row * tileSize);
+				gc.drawImage(tiles[r][c], x + col * tileSize, y + row * tileSize);
 			}
 		}
+	}
+	public int getTileSize() {
+		return tileSize;
+	}
+	
+	public int getNumRows() {
+		return numRows;
+	}
+	public int getNumCols() {
+		return numCols;
 	}
 }
