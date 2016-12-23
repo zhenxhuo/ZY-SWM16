@@ -19,9 +19,11 @@ public class Launcher extends Application{
 	public void start(Stage primaryStage)throws Exception{
 		try{
 			Parent base = FXMLLoader.load(getClass().getResource("MapView.fxml"));
-			primaryStage.setTitle("Diamond Hunter Map Viewer");
+			primaryStage.setTitle(" Map Viewer");
 
 			Scene scene = new Scene(base);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setScene(scene);
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
 			primaryStage.show();

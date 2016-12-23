@@ -52,9 +52,8 @@ public class ObjectLocation {
 	}
 
 	/**
-	 * Retrieve coordinates from the file
 	 * @param line The line of coordinates which correspond to the entity to be retrieved
-	 * @return The coordinates
+	 * @return coordinates
 	 */
 	public static int[] getLocation(int line) {
 		checkExist();
