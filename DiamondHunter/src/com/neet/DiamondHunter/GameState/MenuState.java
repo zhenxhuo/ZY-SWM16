@@ -77,7 +77,7 @@ public class MenuState extends GameState {
 		}
 		if(currentOption == 2) {
 			
-			Main.main(null);
+			com.neet.DiamondHunter.Main.Main.main(null);
 		}
 	}
 	
