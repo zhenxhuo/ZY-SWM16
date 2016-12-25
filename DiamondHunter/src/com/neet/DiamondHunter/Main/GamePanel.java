@@ -87,7 +87,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			catch(Exception e) {
 				e.printStackTrace();
 			}
+			
 		}
+		
 	}
 	
 	// initializes fields
@@ -124,4 +126,5 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	public void keyReleased(KeyEvent key) {
 		Keys.keySet(key.getKeyCode(), false);
 	}
+	
 }

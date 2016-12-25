@@ -31,4 +31,5 @@ public class Sparkle extends Entity {
 	public void draw(Graphics2D g) {
 		super.draw(g);
 	}
+	
 }

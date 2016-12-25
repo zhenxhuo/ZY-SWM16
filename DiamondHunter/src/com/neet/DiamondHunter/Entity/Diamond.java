@@ -32,6 +32,7 @@ public class Diamond extends Entity {
 		animation.setDelay(10);
 		
 		tileChanges = new ArrayList<int[]>();
+		
 	}
 	
 	public void addChange(int[] i) {
@@ -48,4 +49,5 @@ public class Diamond extends Entity {
 	public void draw(Graphics2D g) {
 		super.draw(g);
 	}
+	
 }

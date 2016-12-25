@@ -66,6 +66,7 @@ public class GameOverState extends GameState {
 		else if(rank == 4) Content.drawString(g, "bumbling idiot", 8, 78);
 		
 		Content.drawString(g, "press any key", 12, 110);
+		
 	}
 	
 	public void handleInput() {
@@ -74,4 +75,5 @@ public class GameOverState extends GameState {
 			JukeBox.play("collect");
 		}
 	}
+	
 }

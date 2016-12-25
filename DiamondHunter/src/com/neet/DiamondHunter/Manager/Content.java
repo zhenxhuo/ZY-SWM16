@@ -57,4 +57,5 @@ public class Content {
 			g.drawImage(font[row][col], x + 8 * i, y, null);
 		}
 	}
+	
 }
