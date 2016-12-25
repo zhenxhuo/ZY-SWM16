@@ -10,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
 import javafx.scene.input.DragEvent;
@@ -30,11 +32,25 @@ import javafx.scene.layout.VBox;
 public class MapController{
 
 	//All objects instantiation
-	private ShowAxeBoat	axeBoat;
-	private ShowPlayer	player;
-	private ShowDiamond	diamonds;
+	private ShowObject	axeBoat;
+	private ShowObject	player;
+	private ShowObject	diamonds;
 
-	//Temporary storage for the updated coordinates
+	//All objects' image
+	private Image axeship = new Image("/Sprites/items.gif");
+	PixelReader axeImage = axeship.getPixelReader();
+	WritableImage drawAxe = new WritableImage(axeImage,16,16,16,16);
+	WritableImage drawBoat = new WritableImage(axeImage,0,16,16,16);
+
+	private Image players = new Image("/Sprites/playersprites.gif");
+	PixelReader playerImage = players.getPixelReader();
+	WritableImage drawPlayer = new WritableImage(playerImage,0,0,16,16);
+
+	private Image diamond = new Image("/Sprites/diamond.gif");
+	PixelReader diamondImage = diamond.getPixelReader();
+	WritableImage drawDiamond = new WritableImage(diamondImage,0,0,16,16);
+
+	//Temporary storage for the updated item location
 	private int[] tmpLocation = new int[4];
 	private String itemType = "";
 
@@ -72,9 +88,9 @@ public class MapController{
 		isGameLaunched = false;
 		// MapPane has all the loaders for the map
 		dhmap = new Map();
-		axeBoat = new ShowAxeBoat();
-		player = new ShowPlayer();
-		diamonds = new ShowDiamond();
+		axeBoat = new ShowObject("ITEMS");
+		player = new ShowObject("PLAYER");
+		diamonds = new ShowObject("DIAMONDS");
 
 		// The info display box cannot be edited by user
 		infoText.setEditable(false);
@@ -154,20 +170,20 @@ public class MapController{
 		}
 
 		//display axe on top of tile
-		if(axeBoat.compareCoordinates(rowIndex, colIndex, ShowAxeBoat.AXE)){
-			label.setGraphic(new ImageView(axeBoat.getObject(ShowAxeBoat.AXE)));
+		if(axeBoat.compareCoordinates(rowIndex, colIndex, ShowObject.AXE)){
+			label.setGraphic(new ImageView(drawAxe));
 			tileInfo[rowIndex][colIndex].setEntityType(TileType.AXE);
-			tileText += "\nAn axe!";
+			tileText += "\nAxe";
 			itemType = "Axe";
 			tmpLocation[0] = rowIndex;
 			tmpLocation[1] = colIndex;
 			dragSource(label, itemType);
 		}
 		//display boat on top of tile
-		else if(axeBoat.compareCoordinates(rowIndex, colIndex, ShowAxeBoat.BOAT)){
-			label.setGraphic(new ImageView(axeBoat.getObject(ShowAxeBoat.BOAT)));
+		else if(axeBoat.compareCoordinates(rowIndex, colIndex, ShowObject.BOAT)){
+			label.setGraphic(new ImageView(drawBoat));
 			tileInfo[rowIndex][colIndex].setEntityType(TileType.BOAT);
-			tileText += "\nA boat!";
+			tileText += "\nBoat";
 			itemType = "Boat";
 			tmpLocation[2] = rowIndex;
 			tmpLocation[3] = colIndex;
@@ -175,20 +191,18 @@ public class MapController{
 		}
 		//display player initial position on map
 		else if(player.compareCoordinates(rowIndex, colIndex)){
-			label.setGraphic(new ImageView(player.getObject()));
+			label.setGraphic(new ImageView(drawPlayer));
 			tileInfo[rowIndex][colIndex].setEntityType(TileType.PLAYER);
-			tileText += "\nYou are here!";
+			tileText += "\nYour Starting Location";
 		}
 		// display diamonds initial position on map
-		else if(diamonds.compareCoordinates(rowIndex, colIndex)) {
-			label.setGraphic(new ImageView(diamonds.getObject()));
+		else if(diamonds.diamondLocations(rowIndex, colIndex)) {
+			label.setGraphic(new ImageView(drawDiamond));
 			tileInfo[rowIndex][colIndex].setEntityType(TileType.DIAMOND);
-			tileText += "\nA diamond!";
+			tileText += "\nDiamond";
 		}
 
-		if (tileInfo[rowIndex][colIndex].isNormal()) {
-			tileText += "\nWalkable";
-		}else{
+		if (!tileInfo[rowIndex][colIndex].isNormal()){
 			tileText += "\nBlocked";
 		}
 
@@ -291,9 +305,9 @@ public class MapController{
 	 * Saves the changed coordinates of the moved item as well.
 	 */
 	private void updateGridPane() {
-		axeBoat.getObjectPosition();
-		player.getObjectPosition();
-		diamonds.getObjectPosition();
+		axeBoat.getItemPosition();
+		player.getPlayerPosition();
+		diamonds.getDiamondPosition();
 		mapGrid.getChildren().clear();
 		tileInfo = new TileType[dhmap.getNumRows()][dhmap.getNumCols()];
 
@@ -311,7 +325,7 @@ public class MapController{
 	 */
 	private void saveLocation() {
 		ObjectLocation.overwriteMode = true;
-		axeBoat.updateObjectPosition(tmpLocation[0], tmpLocation[1], tmpLocation[2], tmpLocation[3]);
+		axeBoat.updateItemPosition(tmpLocation[0], tmpLocation[1], tmpLocation[2], tmpLocation[3]);
 	}
 
 	@FXML
