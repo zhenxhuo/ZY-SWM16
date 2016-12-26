@@ -5,6 +5,6 @@ Group member:
 
 -all works in com.neet.DiamondHunter.Main package
 
--draw all the map but the map did not come out
+-edit is unavailable
 
 

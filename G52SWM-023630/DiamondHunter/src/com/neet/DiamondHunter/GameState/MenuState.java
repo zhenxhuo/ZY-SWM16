@@ -10,8 +10,6 @@ import com.neet.DiamondHunter.Manager.GameStateManager;
 import com.neet.DiamondHunter.Manager.JukeBox;
 import com.neet.DiamondHunter.Manager.Keys;
 
-import application.Main;
-
 public class MenuState extends GameState {
 	
 	private BufferedImage bg;

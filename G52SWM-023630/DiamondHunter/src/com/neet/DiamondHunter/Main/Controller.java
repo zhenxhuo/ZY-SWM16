@@ -32,7 +32,7 @@ public class Controller {
 	PixelReader tiless = tileset.getPixelReader();
 
 	
-
+	private Image player = new Image("/Sprites/playersprites.gif");
 	private Image axe = new Image("/Sprites/items.gif");
 	private Image boat = new Image("/Sprites/items.gif");
 	private Image diamond = new Image("/Sprites/diamond.gif");
@@ -40,10 +40,11 @@ public class Controller {
 	PixelReader read1 = axe.getPixelReader();
 	PixelReader read2 = boat.getPixelReader();
 	PixelReader read3 = diamond.getPixelReader();
+	PixelReader read4 = player.getPixelReader();
 	
 	//boat and axe location
-	public static int axex = 22;
-	public static int axey = 19;
+	public static int axex = 13;
+	public static int axey = 34;
 	public static int boatx = 22;
 	public static int boaty = 18;
 
@@ -61,7 +62,7 @@ public class Controller {
 	}
 
 	@FXML
-	public void MapDraw()     {	
+	public void initialize()     {	
     	
     	GraphicsContext gc = canvas.getGraphicsContext2D();
     	
@@ -151,6 +152,10 @@ public class Controller {
 	gc.drawImage(subimage3, 21*tileSize, 4*tileSize);
 	gc.drawImage(subimage3, 14*tileSize, 9*tileSize);
 	gc.drawImage(subimage3, 14*tileSize, 20*tileSize);
+	// draw player
+	WritableImage player;
+	player = new WritableImage(read4, 0, 0, tileSize, tileSize);
+	gc.drawImage(player, 17*tileSize, 17*tileSize);
 	
 	
 	}
