@@ -1,4 +1,4 @@
-//Handles Axe and Boat on Map Viewer
+//Handles Axe, Boat, Player and Diamonds on Map Viewer
 
 package com.neet.DiamondHunter.MapViewer;
 
@@ -47,11 +47,7 @@ public class ShowObject{
 		diamondCount = 0;
 	}
 
-	public boolean compareCoordinates(int row, int col) {
-		return (row == location[0] && col == location[1]) ? true : false;
-	}
-
-	public boolean compareCoordinates(int row, int col, int type) {
+	public boolean axeBoatLocation(int row, int col, int type) {
 		if(type == AXE){
 			return (row == location[0] && col == location[1]) ? true : false;
 		}
@@ -59,6 +55,10 @@ public class ShowObject{
 			return (row == location[2] && col == location[3]) ? true : false;
 		}
 		return false;
+	}
+	
+	public boolean playerLocation(int row, int col) {
+		return (row == location[0] && col == location[1]) ? true : false;
 	}
 
 	public boolean diamondLocations(int row, int col) {

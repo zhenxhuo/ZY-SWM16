@@ -12,16 +12,12 @@ public class TileType {
 	//Tile coordinates
 	private int row,col;
 
-	//Tile placeable
-	public static final boolean INVALID	= false;
-	public static final boolean VALID	= true;
-
 	//Obstacles tile value
 	public static final int TREE	= 20;
 	public static final int BRANCH	= 21;
 	public static final int WATER	= 22;
 
-	//Walkable tile value
+	//Normal tile value
 	public static final int GREENS	= 1;
 	public static final int GRASS	= 2;
 	public static final int FLOWER	= 3;
@@ -42,21 +38,21 @@ public class TileType {
 		this.isObject = false;
 	}
 
-	public TileType(int tileImageType, int row, int col, int entityType) {
+	public TileType(int tileImageType, int row, int col, int objectType) {
 		this.tileImageType = tileImageType;
-		this.isNormal = (tileImageType == GREENS || tileImageType == GRASS || tileImageType == FLOWER) ? true : false;
 		this.row = row;
 		this.col = col;
-		this.hasObject = entityType;
-		this.isObject = (entityType != 0) ? true : false;
+		this.isNormal = (tileImageType == GREENS || tileImageType == GRASS || tileImageType == FLOWER) ? true : false;
+		this.hasObject = objectType;
+		this.isObject = (objectType != 0) ? true : false;
 	}
-	private void setEntity(boolean isEntity) {
-		this.isObject = isEntity;
+	private void setObject(boolean isObject) {
+		this.isObject = isObject;
 	}
 
-	public void setEntityType(int entityType) {
-		this.hasObject = entityType;
-		setEntity((this.hasObject != 0) ? true : false);
+	public void setObjectType(int objectType) {
+		this.hasObject = objectType;
+		setObject((this.hasObject != 0) ? true : false);
 	}
 
 	public boolean isObject() {return isObject;}
@@ -64,5 +60,4 @@ public class TileType {
 	public boolean isNormal() {return isNormal;}
 	public int getRow() {return row;}
 	public int getCol() {return col;}
-	public int getEntityType() {return hasObject;}
 }
