@@ -66,5 +66,4 @@ public class IntroState extends GameState {
 			gsm.setState(GameStateManager.MENU);
 		}
 	}
-	
 }

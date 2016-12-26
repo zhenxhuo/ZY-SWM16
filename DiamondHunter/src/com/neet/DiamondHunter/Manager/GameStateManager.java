@@ -15,7 +15,6 @@ import com.neet.DiamondHunter.GameState.MenuState;
 import com.neet.DiamondHunter.GameState.PauseState;
 import com.neet.DiamondHunter.GameState.PlayState;
 
-
 public class GameStateManager {
 	
 	private boolean paused;
@@ -40,7 +39,6 @@ public class GameStateManager {
 		
 		gameStates = new GameState[NUM_STATES];
 		setState(INTRO);
-		
 	}
 	
 	public void setState(int i) {
@@ -90,5 +88,4 @@ public class GameStateManager {
 			gameStates[currentState].draw(g);
 		}
 	}
-	
 }

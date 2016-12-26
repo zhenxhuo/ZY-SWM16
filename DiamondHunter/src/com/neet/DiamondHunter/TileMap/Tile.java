@@ -21,5 +21,4 @@ public class Tile {
 	
 	public BufferedImage getImage() { return image; }
 	public int getType() { return type; }
-	
 }

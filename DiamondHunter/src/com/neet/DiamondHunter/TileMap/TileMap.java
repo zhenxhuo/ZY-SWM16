@@ -59,10 +59,8 @@ public class TileMap {
 	public void loadTiles(String s) {
 		
 		try {
-
-			tileset = ImageIO.read(
-				getClass().getResourceAsStream(s)
-			);
+			tileset = ImageIO.read(getClass().getResourceAsStream(s));
+			
 			numTilesAcross = tileset.getWidth() / tileSize;
 			tiles = new Tile[2][numTilesAcross];
 			
@@ -83,22 +81,18 @@ public class TileMap {
 						);
 				tiles[1][col] = new Tile(subimage, Tile.BLOCKED);
 			}
-			
 		}
+		
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void loadMap(String s) {
 		
 		try {
-			
 			InputStream in = getClass().getResourceAsStream(s);
-			BufferedReader br = new BufferedReader(
-						new InputStreamReader(in)
-					);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			
 			numCols = Integer.parseInt(br.readLine());
 			numRows = Integer.parseInt(br.readLine());
@@ -121,39 +115,44 @@ public class TileMap {
 					map[row][col] = Integer.parseInt(tokens[col]);
 				}
 			}
-			
 		}
+		
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
-	public int getTileSize() { return tileSize; }
-	public int getx() { return x; }
-	public int gety() { return y; }
-	public int getWidth() { return width; }
-	public int getHeight() { return height; }
-	public int getNumRows() { return numRows; }
+	public int getTileSize(){ return tileSize; }
+	public int getx()		{ return x; }
+	public int gety()		{ return y; }
+	public int getWidth()	{ return width; }
+	public int getHeight()	{ return height; }
+	public int getNumRows()	{ return numRows; }
 	public int getNumCols() { return numCols; }
+	
 	public int getType(int row, int col) {
 		int rc = map[row][col];
 		int r = rc / numTilesAcross;
 		int c = rc % numTilesAcross;
 		return tiles[r][c].getType();
 	}
+	
 	public int getIndex(int row, int col) {
 		return map[row][col];
 	}
+	
 	public boolean isMoving() { return moving; }
 	
 	public void setTile(int row, int col, int index) {
 		map[row][col] = index;
 	}
+	
 	public void replace(int i1, int i2) {
 		for(int row = 0; row < numRows; row++) {
 			for(int col = 0; col < numCols; col++) {
-				if(map[row][col] == i1) map[row][col] = i2;
+				if(map[row][col] == i1){
+					map[row][col] = i2;
+				}
 			}
 		}
 	}
@@ -207,7 +206,6 @@ public class TileMap {
 		
 		if(x != xdest || y != ydest) moving = true;
 		else moving = false;
-		
 	}
 	
 	public void draw(Graphics2D g) {
@@ -231,30 +229,7 @@ public class TileMap {
 					y + row * tileSize,
 					null
 				);
-				
 			}
-			
 		}
-		
 	}
-	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

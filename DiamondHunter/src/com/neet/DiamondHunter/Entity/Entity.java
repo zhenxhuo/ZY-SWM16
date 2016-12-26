@@ -52,10 +52,10 @@ public abstract class Entity {
 		animation = new Animation();
 	}
 	
-	public int getx() { return x; }
-	public int gety() { return y; }
-	public int getRow() { return rowTile; }
-	public int getCol() { return colTile; }
+	public int getx()	{ return x; }
+	public int gety()	{ return y; }
+	public int getRow()	{ return rowTile; }
+	public int getCol()	{ return colTile; }
 	
 	public void setPosition(int i1, int i2) {
 		x = i1;
@@ -146,7 +146,6 @@ public abstract class Entity {
 		}
 		
 		return true;
-		
 	}
 	
 	// Calculates the destination coordinates.
@@ -167,7 +166,6 @@ public abstract class Entity {
 		if(down && y < ydest) y += moveSpeed;
 		else down = false;
 		if(down && y > ydest) y = ydest;
-		
 	}
 	
 	public void update() {
@@ -184,7 +182,6 @@ public abstract class Entity {
 		
 		// update animation
 		animation.update();
-		
 	}
 	
 	// Draws the entity.
@@ -197,5 +194,4 @@ public abstract class Entity {
 			null
 		);
 	}
-	
 }

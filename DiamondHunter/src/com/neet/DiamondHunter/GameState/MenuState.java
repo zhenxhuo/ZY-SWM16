@@ -10,8 +10,6 @@ import com.neet.DiamondHunter.Manager.GameStateManager;
 import com.neet.DiamondHunter.Manager.JukeBox;
 import com.neet.DiamondHunter.Manager.Keys;
 
-import application.Main;
-
 public class MenuState extends GameState {
 	
 	private BufferedImage bg;
@@ -20,8 +18,7 @@ public class MenuState extends GameState {
 	private int currentOption = 0;
 	private String[] options = {
 		"START",
-		"QUIT",
-		"Map Edit"
+		"QUIT"
 	};
 	
 	public MenuState(GameStateManager gsm) {
@@ -43,14 +40,11 @@ public class MenuState extends GameState {
 		
 		g.drawImage(bg, 0, 0, null);
 		
-		Content.drawString(g, options[0], 44, 90);
-		Content.drawString(g, options[1], 48, 100);
-		Content.drawString(g, options[2],35 , 110);
+		Content.drawString(g, options[0], 36, 90);
+		Content.drawString(g, options[1], 36, 100);
 		
-		if(currentOption == 0) g.drawImage(diamond, 25, 86, null);
-		else if(currentOption == 1) g.drawImage(diamond, 25, 96, null);
-		else if(currentOption == 2) g.drawImage(diamond, 18, 106, null);
-		
+		if(currentOption == 0) g.drawImage(diamond, 17, 86, null);
+		else if(currentOption == 1) g.drawImage(diamond, 17, 96, null);
 	}
 	
 	public void handleInput() {
@@ -67,18 +61,13 @@ public class MenuState extends GameState {
 			selectOption();
 		}
 	}
-	
+
 	private void selectOption() {
 		if(currentOption == 0) {
 			gsm.setState(GameStateManager.PLAY);
 		}
-		if(currentOption == 1) {
+		if(currentOption == 1){
 			System.exit(0);
 		}
-		if(currentOption == 2) {
-			
-			com.neet.DiamondHunter.Main.Main.main(null);
-		}
 	}
-	
 }
